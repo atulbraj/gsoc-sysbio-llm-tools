@@ -1,6 +1,6 @@
 """
 Exploring COBRApy basics for GSoC project
-Author: Atul Braj
+Author: Atul B Raj
 Date: 2026-01-28
 """
 

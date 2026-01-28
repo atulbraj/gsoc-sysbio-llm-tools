@@ -58,3 +58,42 @@
 2. Create similar documentation for MEMOTE
 3. Begin MCP server prototype
 4. Add example workflows directory
+
+---
+
+## MEMOTE Exploration - 2026-01-28
+
+### Key Learnings:
+- MEMOTE = Model quality testing tool
+- Generates comprehensive HTML reports
+- Validates stoichiometry, annotations, structure
+- Command-line and Python API
+- Provides quality scoring for models
+
+### Technical Issue Encountered:
+- Python 3.13 + macOS multiprocessing issue
+- `find_blocked_reactions()` uses multiprocessing internally
+- Workaround: use `if __name__ == '__main__':` guard
+- Not an issue in Linux Docker (production environment)
+
+### For SKILLS.md:
+- Document main validation functions
+- Quality scoring approach
+- Annotation checks
+- Mass/charge balance validation
+- GPR (Gene-Protein-Reaction) associations
+- Note multiprocessing workaround for macOS
+- Focus on JSON-serializable results for API
+
+### Main MEMOTE Functions:
+- Model validation tests
+- Annotation completeness
+- Stoichiometric consistency
+- Quality report generation
+- Programmatic test execution
+
+### Next:
+- Create comprehensive MEMOTE SKILLS.md (~500-600 lines)
+- Document all quality check functions
+- Include workflow examples
+- Add JSON serialization helpers
