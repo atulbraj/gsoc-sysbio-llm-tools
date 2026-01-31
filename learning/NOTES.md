@@ -61,6 +61,49 @@
 
 ---
 
+## CarveMe Exploration - 2026-01-28
+
+### Key Learnings:
+- CarveMe = Automated metabolic model reconstruction
+- Command-line tool (primarily)
+- Template-based approach using universal model
+- Automated gap-filling for biomass production
+- RefSeq integration for direct genome download
+- Multiple media conditions supported
+
+### Challenges:
+- Long-running process (minutes to hours)
+- Command-line interface (need subprocess wrappers)
+- Async job management essential for API
+- Resource intensive (2-8GB memory)
+
+### For MCP Integration:
+- Must be async with job queue
+- Progress tracking needed
+- Timeout management critical
+- File cleanup/management important
+- Consider caching completed reconstructions
+
+### SKILLS.md Coverage (1041 lines):
+- Command-line usage patterns
+- Python subprocess wrappers
+- Async job management system
+- Multiple workflow examples
+- Batch reconstruction
+- Multi-media testing
+- Validation helpers
+- Error handling
+
+### Technical Details:
+- Typical runtime: 5-60 minutes for bacteria
+- Requires internet for RefSeq downloads
+- Outputs SBML format models
+- Gap-filling configurable
+
+Progress: 3/5 tools complete
+
+---
+
 ## MEMOTE Exploration - 2026-01-28
 
 ### Key Learnings:
@@ -97,3 +140,68 @@
 - Document all quality check functions
 - Include workflow examples
 - Add JSON serialization helpers
+## MCP Server Prototype - 2026-01-28
+
+### What I Built:
+- Flask-based REST API server for COBRApy
+- Implements Model Context Protocol (MCP) for LLM integration
+- 6 core tool endpoints: load, optimize, stats, reaction info, FVA, gene knockout
+- In-memory model caching for performance
+- Comprehensive error handling with JSON responses
+- Validation script to verify functionality without network
+
+### Architecture:
+- **Server**: Flask app on port 5001
+- **Cache**: Python dictionary for loaded models
+- **Endpoints**: RESTful JSON API
+- **Tools**: Each endpoint exposes a specific COBRApy capability
+- **Error Handling**: Try-except blocks with traceback for debugging
+
+### Files Created:
+- `server.py` (~380 lines) - Main Flask application
+- `requirements.txt` - Dependencies (flask, cobra)
+- `README.md` - Comprehensive documentation with examples
+- `test_server.py` - Test suite for all endpoints
+- `example_workflow.py` - LLM agent simulation with 3 workflows
+- `validate_server.py` - Code validation without network
+
+### Key Design Decisions:
+1. **Port 5001**: Avoided conflict with macOS AirPlay on 5000
+2. **In-memory cache**: Fast but not persistent (good for prototype)
+3. **JSON responses**: Standard format for API communication
+4. **Model IDs**: String identifiers for cached models
+5. **Error traces**: Include full traceback in development mode
+
+### MCP Protocol Implementation:
+- `/health` - Server status check
+- `/tools` - List available tools (MCP discovery)
+- `/models` - List cached models
+- Tool endpoints follow pattern: `/tools/<tool_name>`
+- Each tool returns: `{"success": bool, "result": data}` or `{"error": msg}`
+
+### Testing Strategy:
+- Validation script: Tests without network (imports, endpoints, COBRApy)
+- Test script: Full HTTP testing of all endpoints (requires running server)
+- Example workflow: Demonstrates LLM agent patterns
+
+### What It Demonstrates:
+- **Integration Skills**: Can wrap existing tools in API
+- **MCP Understanding**: Implements protocol for LLM tools
+- **Production Thinking**: Includes caching, error handling, validation
+- **Documentation**: Clear README with curl + Python examples
+
+### Next Steps for Production:
+- Add authentication/API keys
+- Use persistent storage (Redis) instead of in-memory cache
+- Add rate limiting
+- Deploy with gunicorn/uwsgi
+- Add more endpoints (medium modification, model comparison)
+- WebSocket support for long-running analyses
+
+### Time Invested:
+- Planning: 30 min
+- Server implementation: 2 hours
+- Test scripts: 1 hour
+- Documentation: 45 min
+- Validation & debugging: 45 min
+- **Total: ~5 hours**
