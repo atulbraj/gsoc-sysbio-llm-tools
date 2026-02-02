@@ -65,9 +65,3 @@ gsoc-sysbio-llm-tools/
 ## Time Tracking
 
 Total invested: **35-41 hours**
-
-
-Good luck with your proposal! 🚀
-
----
-Last updated: January 28, 2026
